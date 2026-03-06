@@ -5,7 +5,8 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git credentialsId: 'github-creds',
+                git branch: 'main',
+                credentialsId: 'github-creds',
                 url: 'https://github.com/satyadarling/jenkis_python_implimentation.git'
             }
         }
