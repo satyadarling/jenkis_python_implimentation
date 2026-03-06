@@ -13,13 +13,13 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                bat 'pip install pytest selenium webdriver-manager'
+                bat 'pip install pytest selenium webdriver-manager pytest-html'
             }
         }
 
-        stage('Execute Test Script') {
+        stage('Run Tests') {
             steps {
-                bat 'pytest pages/test_e2e_flow.py'
+                bat 'pytest tests/test_e2e_flow.py --html=report.html'
             }
         }
 
