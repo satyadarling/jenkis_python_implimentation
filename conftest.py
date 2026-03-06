@@ -1,12 +1,11 @@
-def reverse(name):
-    n=list(name)
-    first=0
-    last=len(n)-1
-    while last>first:
-        n[first],n[last]=n[last],n[p]
+import pytest
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 
-
-
-name='satya'
-print(name[::-1])
-
+from webdriver_manager.chrome import ChromeDriverManager
+@pytest.fixture()
+def setup():
+   driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+   driver.get("https://rahulshettyacademy.com/loginpagePractise/")
+   yield driver
+   driver.close()
