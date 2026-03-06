@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 
 ENV PYTHONPATH=/app
 
-CMD ["python", "pages/test_e2e_flow.py"]
+CMD ["python", "-m", "pages.test_e2e_flow"]
