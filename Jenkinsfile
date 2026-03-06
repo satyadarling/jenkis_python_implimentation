@@ -10,6 +10,14 @@ pipeline {
 
     stages {
 
+        stage('Prepare Server') {
+            steps {
+                bat """
+                ssh -i %PEM_PATH% -o StrictHostKeyChecking=no %SERVER_USER%@%SERVER_IP% "sudo zypper install -y git"
+                """
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 bat """
