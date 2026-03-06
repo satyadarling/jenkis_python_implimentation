@@ -19,7 +19,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat 'pytest tests/test_e2e_flow.py --html=report.html'
+                bat 'pytest pages/test_e2e_flow.py --html=report.html'
             }
         }
 
