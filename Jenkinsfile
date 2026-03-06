@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        SERVER_IP = "YOUR_SERVER_IP"
-        SERVER_USER = "YOUR_USER"
+        SERVER_IP = "56.228.41.170"
+        SERVER_USER = "ec2-user"
         IMAGE_NAME = "satyaallumolu8/dockerrep:latest"
     }
 
