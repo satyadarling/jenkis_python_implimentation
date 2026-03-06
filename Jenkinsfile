@@ -1,25 +1,38 @@
 pipeline {
     agent any
 
+    environment {
+        SERVER_IP = "YOUR_SERVER_IP"
+        SERVER_USER = "YOUR_USER"
+        IMAGE_NAME = "satyaallumolu8/dockerrep:latest"
+    }
+
     stages {
 
-        stage('Clone Repository') {
+        stage('Build Docker Image') {
             steps {
-                git branch: 'main',
-                credentialsId: 'github-creds',
-                url: 'https://github.com/satyadarling/jenkis_python_implimentation.git'
+                sshagent(['Docker-connection']) {
+                    bat """
+                    ssh %SERVER_USER%@%SERVER_IP% "
+                    rm -rf jenkins_project &&
+                    git clone https://github.com/satyadarling/jenkis_python_implimentation.git &&
+                    cd jenkis_python_implimentation &&
+                    docker build -t %IMAGE_NAME% .
+                    "
+                    """
+                }
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Push Docker Image') {
             steps {
-                bat 'pip install pytest selenium webdriver-manager pytest-html'
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                bat 'pytest pages/test_e2e_flow.py --html=report.html'
+                sshagent(['Docker-connection']) {
+                    bat """
+                    ssh %SERVER_USER%@%SERVER_IP% "
+                    docker push %IMAGE_NAME%
+                    "
+                    """
+                }
             }
         }
 
