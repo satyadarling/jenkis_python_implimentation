@@ -4,7 +4,17 @@ WORKDIR /app
 
 COPY . /app
 
-RUN pip install -r requirements.txt
+# Install Chrome dependencies
+RUN apt-get update && apt-get install -y \
+    chromium \
+    chromium-driver \
+    wget \
+    curl \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
 ENV PYTHONPATH=/app
 
